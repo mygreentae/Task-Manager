@@ -1,0 +1,11 @@
+# Python
+__pycache__
+app/__pycache__
+
+
+# Flask
+instance/
+.coverage
+htmlcov/
+dist/
+build/

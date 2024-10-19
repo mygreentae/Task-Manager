@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
+</head>
+<body>
+     <!-- Welcome Section -->
+     <header>
+        <h1>Welcome to TaskManager</h1>
+        <p>Your personal task management system</p>
+        <!-- TODO: Login or create account buttons if not currently authenticated -->
+        {% if not current_user.is_authenticated %}
+        <!-- TODO: create registration form and page -->
+            <a href="{{ url_for('main.register') }}">Get Started</a>
+        {% endif %}
+
+    </header>
+
+
+    <!-- TODO: add different sections and features -->
+
+    <!-- TODO: add footer -->
+</body>

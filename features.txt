@@ -1,0 +1,15 @@
+To do:
+- create account
+- support user authentication (login, registration)
+- task creation (title, description, deadline, priority, category)
+- task management (update, delete, mark as complete)
+- task listing 
+- user dashboard
+
+
+Other:
+- task categorization
+- deadlines and priority levels
+- task completion tracking
+- light mode and dark mode
+- user themes???
