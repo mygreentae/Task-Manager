@@ -1,0 +1,46 @@
+<!-- app/templates/dashboard.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Welcome, {{ current_user.firstname }}!</h1>
+    <h2>Your Tasks</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Category</th>
+                <th>Deadline</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if tasks %}
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.category }}</td>
+                    <td>{{ task.deadline }}</td>
+                    <td>{{ task.priority }}</td>
+                    <td>{{ task.status }}</td>
+                    <td>
+                        <a href="{{ url_for('main.edit_task', task_id=task.id) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ url_for('main.delete_task', task_id=task.id) }}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">You currently have no tasks</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('main.create_task') }}" class="btn btn-success">Add New Task</a>
+</div>
+{% endblock %}

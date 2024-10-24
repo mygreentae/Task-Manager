@@ -5,6 +5,7 @@ To do:
 - task management (update, delete, mark as complete)
 - task listing 
 - user dashboard
+- implement forgot password
 
 
 Other:
@@ -13,3 +14,7 @@ Other:
 - task completion tracking
 - light mode and dark mode
 - user themes???
+
+
+- add css for flash messages
+- add css for everything
