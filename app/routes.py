@@ -12,7 +12,7 @@ main = Blueprint('main', __name__)
 # @login_required
 def home():
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard.html'))
+        return redirect(url_for('main.dashboard'))
     return render_template('home.html')
 
 @main.route('/login', methods=['GET', 'POST'])
@@ -65,9 +65,15 @@ def register():
 @main.route('/dashboard')
 @login_required
 def dashboard():
-    #  tasks = Task.query.filter_by(user_id=current_user.id).all()
-    # return render_template('dashboard.html', tasks=tasks)
-    return render_template('dashboard.html')
+    form = TaskForm()  # Instantiate the form
+    tasks = Task.query.filter_by(user_id=current_user.id).all()  # Assuming tasks are related to the logged-in user
+    return render_template('dashboard.html', tasks=tasks, form=form)
+
+@main.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('main.login'))
 
 @main.route('/tasks')
 @login_required
@@ -75,14 +81,35 @@ def tasks():
     user_tasks = Task.query.filter_by(user_id=current_user.id).all()
     return render_template('tasks.html', tasks=user_tasks)
 
-@main.route('/create-task', methods=['GET', 'POST'])
+@main.route('/create_task', methods=['POST'])
 @login_required
 def create_task():
-    # task creation logic here
+    form = TaskForm()
+    if form.validate_on_submit():
+        new_task = Task(
+            title=form.title.data,
+            category=form.category.data,
+            deadline=form.deadline.data,
+            priority=form.priority.data,
+            status=form.status.data,
+            notes=form.notes.data,
+            user_id=current_user.id
+        )
+        db.session.add(new_task)
+        db.session.commit()
+        flash('Task created successfully!', 'success')
+        return redirect(url_for('main.dashboard'))
+    else:
+        flash('Error creating task. Please check the form and try again.', 'danger')
+    return redirect(url_for('main.dashboard'))
+
+@main.route('/edit_task', methods=['POST'])
+@login_required
+def edit_task():
     pass
 
-@main.route('/logout')
+@main.route('/delete_task', methods=['POST'])
 @login_required
-def logout():
-    logout_user()
-    return redirect(url_for('main.login'))
+def delete_task():
+    pass
+

@@ -29,10 +29,35 @@
                     <td>{{ task.priority }}</td>
                     <td>{{ task.status }}</td>
                     <td>
-                        <a href="{{ url_for('main.edit_task', task_id=task.id) }}" class="btn btn-primary">Edit</a>
-                        <a href="{{ url_for('main.delete_task', task_id=task.id) }}" class="btn btn-danger">Delete</a>
+                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewTaskModal{{ task.id }}">
+                            View
+                        </button>
                     </td>
                 </tr>
+        
+                <!-- View Task Modal -->
+                <div class="modal fade" id="viewTaskModal{{ task.id }}" tabindex="-1" aria-labelledby="viewTaskModalLabel{{ task.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="viewTaskModalLabel{{ task.id }}">Task Details: {{ task.title }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Category:</strong> {{ task.category }}</p>
+                                <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+                                <p><strong>Priority:</strong> {{ task.priority }}</p>
+                                <p><strong>Status:</strong> {{ task.status }}</p>
+                                <p><strong>Notes:</strong> {{ task.notes }}</p> <!-- Assuming you have notes field -->
+                            </div>
+                            <div class="modal-footer">
+                                <a href="{{ url_for('main.edit_task', task_id=task.id) }}" class="btn btn-primary">Edit</a>
+                                <a href="{{ url_for('main.delete_task', task_id=task.id) }}" class="btn btn-danger">Delete</a>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {% endfor %}
             {% else %}
                 <tr>
@@ -41,6 +66,55 @@
             {% endif %}
         </tbody>
     </table>
-    <a href="{{ url_for('main.create_task') }}" class="btn btn-success">Add New Task</a>
-</div>
+    <!-- <a href="{{ url_for('main.create_task') }}" class="btn btn-success">Add New Task</a> -->
+
+    <!-- Button to trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">
+        Create New Task
+    </button>
+
+    <!-- Modal Structure -->
+    <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="taskModalLabel">Create New Task</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createTaskForm" method="POST" action="{{ url_for('main.create_task') }}">
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            {{ form.title.label(class="form-label") }}
+                            {{ form.title(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.category.label(class="form-label") }}
+                            {{ form.category(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.deadline.label(class="form-label") }}
+                            {{ form.deadline(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.priority.label(class="form-label") }}
+                            {{ form.priority(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.status.label(class="form-label") }}
+                            {{ form.status(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.notes.label(class="form-label") }}
+                            {{ form.notes(class="form-control ") }}
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" form="createTaskForm">Create Task</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

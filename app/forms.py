@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, DateTimeField, SelectField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, SelectField, DateField
 from wtforms.validators import DataRequired, Length, Email
 
 class RegistrationForm(FlaskForm):
@@ -17,9 +17,10 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 class TaskForm(FlaskForm):
+    # TODO:: Remove required later
     title = StringField('Task Title', validators=[DataRequired()])
-    description = TextAreaField('Description')
-    deadline = DateTimeField('Deadline')
-    priority = SelectField('Priority', choices=[('Low', 'Low'), ('Medium', 'Medium'), ('High', 'High')])
-    completed = BooleanField('Completed')
-    submit = SubmitField('Save Task')
+    category = StringField('Category', validators=[DataRequired()])
+    deadline = DateField('Deadline', format='%Y-%m-%d', validators=[DataRequired()])
+    priority = SelectField('Priority', choices=[('Low', 'Low'), ('Medium', 'Medium'), ('High', 'High')], validators=[DataRequired()])
+    status = SelectField('Status', choices=[('Not Started', 'Not Started'), ('In Progress', 'In Progress'), ('Completed', 'Completed')], validators=[DataRequired()])
+    notes = StringField('Notes', validators=[DataRequired()])

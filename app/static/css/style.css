@@ -1,0 +1,5 @@
+.description-field {
+    width: 100%; /* Make the field take up the full width of its container */
+    height: 150px; /* Adjust the height as needed */
+    resize: vertical; /* Allows the user to resize the text area vertically */
+}
