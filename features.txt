@@ -16,5 +16,7 @@ Other:
 - user themes???
 
 
-- add css for flash messages
-- add css for everything
+- email confirmation that account has been created
+- add edit user functionality
+- sort tasks by category
+- sort tasks by complete 
